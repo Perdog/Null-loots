@@ -1,19 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
-	var xhttp = new XMLHttpRequest();
-	zhttp.onreadystatechange = function() {
-		lines = this.status + " - " + this.readyState + "--- " + this.statusText;
-		console.log(lines);
-		alert(lines);
-	};
-	xhttp.open("GET","typeids.csv", true);
-	xhttp.send();
-    /*$.ajax({
+	$.ajax({
         //type: "GET",
         url: "typeids.csv",
         dataType: "text",
         //success: function(data) {processData(data);}
-     }).done(processData);*/
+     }).done(processData);
 });
 
 var lines = {};
@@ -21,96 +13,92 @@ function processData(allText) {
     var allTextLines = allText.split(/\r\n|\n/);
 
     for (var i=0; i<allTextLines.length; i++) {
-		var line = allTextLines[i].replace("\",\"","\"---\"");
+		var line = allTextLines[i].replace(new RegExp("\",\"", 'g'),"\"---\"")
+		line = line.replace(new RegExp("\"", 'g'), "")
         var data = line.split("---");
-		
 		var key = data[1];
         lines[key] = data[2];
     }
-	lines["length"] = "what the fuck";
-	console.log(lines);
+	//console.log(lines);
     //alert(lines);
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
 //update this with your js_form selector
-    var form_id_js = "javascript_form";
-	var uuid;
-    var data_js = {
-        "access_token": "q7evs0jcl1n40n6s2kkkvx5x"
-    };
+var form_id_js = "javascript_form";
+var uuid;
+var data_js = {
+    "access_token": "q7evs0jcl1n40n6s2kkkvx5x"
+};
 
-    var sendButton = document.getElementById("send_email");
-	var js_form = document.getElementById(form_id_js);
+var sendButton = document.getElementById("send_email");
+var js_form = document.getElementById(form_id_js);
 
-    sendButton.onclick = do_the_stuffs;
+sendButton.onclick = do_the_stuffs;
 	
-	function do_the_stuffs() {
-		uuid = uuidv4();
-		var messageBody = compose_list($('#items').val());
-		//send_email(messageBody);
-	}
+function do_the_stuffs() {
+	uuid = uuidv4();
+	var messageBody = compose_list($('#items').val());
+	//send_email(messageBody);
+}
 	
-	function compose_list(pasted) {
+function compose_list(pasted) {
 		
 		
 		
-		$('#results').val(JSON.stringify(lines));
-	}
+	$('#results').val(JSON.stringify(lines));
+}
 
-    function send_email() {
-        sendButton.value='Sending…';
-        sendButton.disabled=true;
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-                js_onSuccess();
-            } else
-            if(request.readyState == 4) {
-                js_onError(request.response);
-            }
-        };
-		
-        var subject = uuid; //Create UUID //document.querySelector("#" + form_id_js + " [name='subject']").value;
-		var message = document.querySelector("#" + form_id_js + " [name='text']").value;
-        data_js['subject'] = subject;
-        data_js['text'] = message;
-        var params = toParams(data_js);
-
-        request.open("POST", "https://postmail.invotes.com/send", true);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        request.send(params);
-
-        return false;
-    }
-
-    function toParams(data_js) {
-        var form_data = [];
-        for ( var key in data_js ) {
-            form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+function send_email() {
+    sendButton.value='Sending…';
+    sendButton.disabled=true;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            js_onSuccess();
+        } else
+        if(request.readyState == 4) {
+            js_onError(request.response);
         }
-
-        return form_data.join("&");
-    }
-	
-    js_form.addEventListener("submit", function (e) {
-        e.preventDefault();
-    });
-
-    function js_onSuccess() {
-        // remove this to avoid redirect
+    };
 		
-    }
+    var subject = uuid; //Create UUID //document.querySelector("#" + form_id_js + " [name='subject']").value;
+	var message = document.querySelector("#" + form_id_js + " [name='text']").value;
+    data_js['subject'] = subject;
+    data_js['text'] = message;
+    var params = toParams(data_js);
 
-    function js_onError(error) {
-        // remove this to avoid redirect
-		alert("The page failed to send an email. Please try again. \n " + error);
+    request.open("POST", "https://postmail.invotes.com/send", true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    request.send(params);
+    return false;
+}
+
+function toParams(data_js) {
+    var form_data = [];
+    for ( var key in data_js ) {
+        form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
     }
-	
-	function uuidv4() {
-		return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-	)
+    return form_data.join("&");
+}
+js_form.addEventListener("submit", function (e) {
+    e.preventDefault();
+});
+function js_onSuccess() {
+    // remove this to avoid redirect
+}
+function js_onError(error) {
+    // remove this to avoid redirect
+	alert("The page failed to send an email. Please try again. \n " + error);
+}
+
+function uuidv4() {
+	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+}
+
+function escapeRegExp(str) {
+    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
