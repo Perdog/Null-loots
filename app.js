@@ -1,11 +1,19 @@
 ////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
-    $.ajax({
+	var xhttp = new XMLHttpRequest();
+	zhttp.onreadystatechange = function() {
+		lines = this.status + " - " + this.readyState + "--- " + this.statusText;
+		console.log(lines);
+		alert(lines);
+	};
+	xhttp.open("GET","typeids.csv", true);
+	xhttp.send();
+    /*$.ajax({
         //type: "GET",
         url: "typeids.csv",
         dataType: "text",
         //success: function(data) {processData(data);}
-     }).done(processData);
+     }).done(processData);*/
 });
 
 var lines = {};
