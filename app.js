@@ -1,24 +1,25 @@
 ////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
     $.ajax({
-        type: "GET",
+        //type: "GET",
         url: "typeids.csv",
         dataType: "text",
-        success: function(data) {processData(data);}
-     });
+        //success: function(data) {processData(data);}
+     }).done(processData);
 });
 
+var lines = {};
 function processData(allText) {
     var allTextLines = allText.split(/\r\n|\n/);
-    var lines = [];
 
     for (var i=0; i<allTextLines.length; i++) {
-		var line = allTextLines[i].replace("&quot;,&quot;","&quot;---&quot;");
+		var line = allTextLines[i].replace("\",\"","\"---\"");
         var data = line.split("---");
 		
-		var key = data[1].toString();
-        lines[key] = data[2].toString();
+		var key = data[1];
+        lines[key] = data[2];
     }
+	lines["length"] = "what the fuck";
 	console.log(lines);
     //alert(lines);
 }
@@ -39,14 +40,14 @@ function processData(allText) {
 	function do_the_stuffs() {
 		uuid = uuidv4();
 		var messageBody = compose_list($('#items').val());
-		send_email(messageBody);
+		//send_email(messageBody);
 	}
 	
 	function compose_list(pasted) {
 		
 		
 		
-		$('#results').val(parsed);
+		$('#results').val(JSON.stringify(lines));
 	}
 
     function send_email() {
