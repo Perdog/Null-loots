@@ -37,14 +37,16 @@ Stuffing Services
 						- The results box will give you a list of the items that I will buy, the price I'll pay for it, and a code to put in the item description (This is for my reference). <br>
 						- Create an item exchange contract with the items listed, at the price given. Set the expiry to 4 weeks (Gives me breathing room if I'm running low on isk). <br>
 						<br>
-						<font color=yellow>Note: Please make your contracts in the 00TY-J Fortizar. This prevents me from having to jump around collecting everything, or from having to get CFO to do it.</font>
+						<font color=yellow>Note<sup>1</sup>: Please make your contracts in the 00TY-J Fortizar. This prevents me from having to jump around collecting everything, or from having to get CFO to do it.</font>
+						<br>
+						<font color=yellow>Note<sup>2</sup>: All prices are based on Jita <b>buy</b> orders.</font>
 					</div>
 					<!--
 					<textarea id="items" class="form-control" rows="10" cols="50"></textarea><br>
                     <button id="submit" type="button" class="btn btn-warning btn-block">Gimme your best price!</button>
 					-->
 					<form id="javascript_form">
-						<textarea name="text" placeholder="Paste your items here" class="form-control" rows="10" cols="50"></textarea>
+						<textarea id="items" name="text" placeholder="Paste your items here" class="form-control" rows="10" cols="50"></textarea>
 						<br>
 						<input type="submit" id="send_email" class="btn btn-warning btn-block" value="Submit" />
 					</form>
@@ -54,7 +56,8 @@ Stuffing Services
 			<div class="row">
 				<div class="col-md-12">
 					<h4>What I'll take:</h4>
-					<textarea id="results" class="form-control" rows="2" cols="10"></textarea>
+					<!--<textarea id="results" class="form-control" rows="2" cols="10"></textarea>-->
+					<span id="results"></span>
 				</div>
 			</div>
 		</div>
