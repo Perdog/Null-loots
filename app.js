@@ -14,11 +14,13 @@ function processData(allText) {
 
     for (var i=0; i<allTextLines.length; i++) {
 		var line = allTextLines[i].replace("&quot;,&quot;","&quot;---&quot;");
-        var data = line.split('---');
+        var data = line.split("---");
 		
-        lines[data[1]] = data[2];
+		var key = data[1].toString();
+        lines[key] = data[2].toString();
     }
-    alert(lines);
+	console.log(lines);
+    //alert(lines);
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
