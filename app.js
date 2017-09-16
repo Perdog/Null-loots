@@ -84,7 +84,7 @@ function waitForIt() {
 		setTimeout(function(){waitForIt()},500);
 		console.log("waiting....");
 	}
-	// Everything is done, lets build the output
+	// Everything is done, lets build the output and email
 	else {
 		console.log("Done waiting");
 	
@@ -97,7 +97,7 @@ function waitForIt() {
 		for (var key in willTake.items) {
 			var k = willTake.items[key];
 			var p = (k.buy_average * k.quantity);
-			var perm3 = ((p/(parseFloat(k.m3.replace(" m3", ""))*k.quantity))-(250*k.quantity));
+			var perm3 = Math.round(((p/(parseFloat(k.m3.replace(" m3", ""))*k.quantity))-(250*k.quantity))*100)/100;
 			console.log(perm3);
 			
 			k.will_pay = p;
@@ -129,6 +129,12 @@ var willTake = {};
 */
 function compose_list(pasted) {
 	var allLines = pasted.split(/\r\n|\n/);
+	
+	if (allLines[0].length < 7) {
+		alert("Empty field or failed paste. Please try again");
+		return;
+	}
+	
 	willTake.items = {};
 	
 	for(var i = 0; i < allLines.length; i++) {
