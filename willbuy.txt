@@ -1,0 +1,371 @@
+'Element' Kinetic Plating I
+'Refuge' Adaptive Nano Plating I
+100MN Afterburner II
+10MN Afterburner II
+10MN Monopropellant Enduring Afterburner
+10MN Y-S8 Compact Afterburner
+125mm Gatling AutoCannon II
+1400mm 'Scout' Artillery I
+150mm Light AutoCannon II
+150mm Light Gallium Machine Gun
+150mm Railgun II
+1600mm Crystalline Carbonide Restrained Plates
+1600mm Rolled Tungsten Compact Plates
+1600mm Steel Plates II
+1MN Afterburner II
+1MN Civilian Afterburner
+1MN Monopropellant Enduring Afterburner
+1MN Y-S8 Compact Afterburner
+200mm AutoCannon II
+220mm Vulcan AutoCannon II
+250mm Prototype Gauss Gun
+250mm Railgun II
+400mm Rolled Tungsten Compact Plates
+400mm Steel Plates II
+500MN Quad LiF Restrained Microwarpdrive
+50MN Y-T8 Compact Microwarpdrive
+5MN Cold-Gas Enduring Microwarpdrive
+5MN Microwarpdrive I
+5MN Quad LiF Restrained Microwarpdrive
+5MN Y-T8 Compact Microwarpdrive
+75mm Gatling Rail I
+800mm Repeating Cannon II
+800mm Rolled Tungsten Compact Plates
+Acolyte EV-300
+Acolyte II
+Adaptive Invulnerability Field II
+Adaptive Nano Plating II
+Algos
+Alumel-Wired Enduring Sensor Booster
+Anode Light Electron Particle Cannon I
+Anode Light Ion Particle Cannon I
+Antimatter Charge S
+Antipharmakon Aeolis
+Antipharmakon Toxot
+Armor Command Burst I
+Armor Command Burst II
+Armor Energizing Charge
+Armor Explosive Hardener II
+Armor Kinetic Hardener II
+Armor Reinforcement Charge
+Armor Thermal Hardener II
+Ashimmu
+Atron
+Augoror
+Aurora M
+Auto Targeting System I
+Ballistic Control System II
+Barrage M
+Barrage S
+Bellicose
+Bouncer I
+Caldari Navy Antimatter Charge M
+Caldari Navy Antimatter Charge S
+Caldari Navy Inferno Heavy Missile
+Caldari Navy Iron Charge M
+Caldari Navy Mjolnir Heavy Missile
+Caldari Navy Nova Heavy Missile
+Caldari Navy Scourge Heavy Missile
+Caldari Navy Thorium Charge S
+Cap Booster 200
+Celestis
+Centii A-Type Explosive Plating
+Centii A-Type Small Remote Armor Repairer
+Centii A-Type Thermal Plating
+Centum C-Type Energized Explosive Membrane
+Centum C-Type Energized Kinetic Membrane
+Centum C-Type Medium Remote Armor Repairer
+Conflagration M
+Conflagration S
+Coreli A-Type Kinetic Plating
+Corelum C-Type Energized Kinetic Membrane
+Corelum C-Type Energized Thermal Membrane
+Corpii A-Type EM Plating
+Curator II
+Damage Control I
+Damage Control II
+Dark Blood Energized Explosive Membrane
+Depleted Uranium S
+Drone Damage Amplifier II
+Drone Link Augmentor I
+Dual 150mm Railgun II
+ECCM Script
+EM Ward Amplifier II
+Energized Adaptive Nano Membrane II
+Energized Explosive Membrane II
+Energized Kinetic Membrane II
+Experimental Energized Explosive Membrane I
+Extruded Compact Heat Sink
+F-89 Compact Signal Amplifier
+F-90 Compact Sensor Booster
+Faint Epsilon Scoped Warp Scrambler
+Federation Navy Antimatter Charge S
+Federation Navy Comet
+Federation Navy Hammerhead
+Federation Navy Small Plasma Smartbomb
+Federation Navy Stasis Webifier
+Fleeting Compact Stasis Webifier
+Focused Medium Pulse Laser II
+Gatling Pulse Laser II
+Gleam M
+Gnosis
+Guardian
+Gyrostabilizer II
+Hail M
+Hail S
+Hammerhead II
+Harpy
+Heat Sink II
+Heavy Beam Laser II
+Heavy Electron Blaster II
+Heavy Energy Neutralizer II
+Heavy Pulse Laser II
+Hobgoblin I
+Hobgoblin II
+Hornet EC-300
+Hornet II
+IFFA Compact Damage Control
+Imperial Navy 1600mm Steel Plates
+Imperial Navy Energized Adaptive Nano Membrane
+Imperial Navy Multifrequency M
+Imperial Navy Standard M
+Incursus
+Inferno Fury Heavy Missile
+Infrared S
+Initiated Compact Warp Disruptor
+Initiated Compact Warp Scrambler
+Inquisitor
+Iridium Charge S
+J5 Enduring Warp Disruptor
+J5b Enduring Warp Scrambler
+Javelin M
+Kirin
+LFT Enduring Sensor Dampener
+Large 'Regard' Remote Capacitor Transmitter
+Large Anti-Explosive Pump I
+Large Remote Armor Repairer II
+Large Trimark Armor Pump I
+Light Electron Blaster II
+Light Ion Blaster II
+Light Neutron Blaster II
+Light Shield Maintenance Bot II
+Loki
+Loki Defensive - Adaptive Augmenter
+Loki Electronics - Immobility Drivers
+Loki Engineering - Power Core Multiplier
+Loki Offensive - Projectile Scoping Array
+Loki Propulsion - Fuel Catalyst
+Machariel
+Magnetic Field Stabilizer I
+Magnetic Field Stabilizer II
+Maller
+Mark I Compact Reactor Control Unit
+Maulus
+Maulus Navy Issue
+Medium Ancillary Current Router I
+Medium Anti-EM Pump I
+Medium Anti-EM Pump II
+Medium Anti-Explosive Pump I
+Medium Anti-Kinetic Pump I
+Medium Anti-Thermal Pump I
+Medium Cap Battery II
+Medium Coaxial Compact Remote Armor Repairer
+Medium Electrochemical Capacitor Booster I
+Medium F-S9 Regolith Compact Shield Extender
+Medium Gremlin Compact Energy Neutralizer
+Medium Infectious Scoped Energy Neutralizer
+Medium Remote Armor Repairer II
+Medium Remote Capacitor Transmitter II
+Medium Shield Extender I
+Medium Trimark Armor Pump I
+Medium Trimark Armor Pump II
+Medium Unstable Power Fluctuator I
+Merlin
+Micro Auxiliary Power Core I
+Micro Auxiliary Power Core II
+Micro Jump Field Generator
+Missile Guidance Computer II
+Missile Precision Script
+Missile Range Script
+Mjolnir Fury Heavy Missile
+Modal Light Electron Particle Accelerator I
+Multifrequency M
+Multifrequency S
+Nanite Repair Paste
+Nanofiber Internal Structure II
+Navitas
+Navy Cap Booster 200
+Navy Cap Booster 400
+Navy Cap Booster 800
+Navy Micro Auxiliary Power Core
+Nova Fury Heavy Missile
+Null M
+Null S
+Ogre II
+Omen
+Omnidirectional Tracking Link II
+Optimal Range Script
+Peripheral Compact Target Painter
+Phased Scoped Target Painter
+Pontifex
+Prototype Armor Explosive Hardener I
+Prototype Armor Kinetic Hardener I
+Prototype Armor Thermal Hardener I
+Prototype Energized Adaptive Nano Membrane I
+Prototype Energized Explosive Membrane I
+Punisher
+Rapid Heavy Missile Launcher II
+Rapid Repair Charge
+Reactor Control Unit II
+Remote Sensor Booster II
+Remote Sensor Dampener II
+Republic Fleet Depleted Uranium L
+Republic Fleet EMP L
+Republic Fleet EMP M
+Republic Fleet EMP S
+Republic Fleet Fusion L
+Republic Fleet Fusion M
+Republic Fleet Fusion S
+Republic Fleet Medium Shield Extender
+Republic Fleet Phased Plasma L
+Republic Fleet Phased Plasma M
+Republic Fleet Phased Plasma S
+Republic Fleet Proton L
+Rifter
+Rocket Launcher II
+Rupture
+Scan Resolution Dampening Script
+Scan Resolution Script
+Scorch M
+Scorch S
+Scourge Fury Heavy Missile
+Sensor Booster II
+Shade Compact Radar ECM
+Shadow Serpentis Armor EM Hardener
+Shadow Serpentis Armor Kinetic Hardener
+Shadow Serpentis Armor Thermal Hardener
+Small Ancillary Armor Repairer
+Small Ancillary Current Router I
+Small Anti-EM Pump I
+Small Anti-EM Screen Reinforcer I
+Small Anti-EM Screen Reinforcer II
+Small Anti-Explosive Pump I
+Small Anti-Explosive Screen Reinforcer II
+Small Anti-Kinetic Pump I
+Small Anti-Thermal Pump I
+Small Anti-Thermal Screen Reinforcer I
+Small Capacitor Booster II
+Small Coaxial Compact Remote Armor Repairer
+Small Command Processor I
+Small Core Defense Field Extender I
+Small Core Defense Field Extender II
+Small Diminishing Power System Drain I
+Small EMP Smartbomb II
+Small Electrochemical Capacitor Booster I
+Small Energy Neutralizer II
+Small Focused Pulse Laser I
+Small Gremlin Compact Energy Neutralizer
+Small Hybrid Collision Accelerator I
+Small I-ax Enduring Remote Armor Repairer
+Small Infectious Scoped Energy Neutralizer
+Small Polycarbon Engine Housing I
+Small Processor Overclocking Unit I
+Small S95a Scoped Remote Shield Booster
+Small Semiconductor Memory Cell I
+Small Solace Scoped Remote Armor Repairer
+Small Transverse Bulkhead II
+Small Trimark Armor Pump I
+Spike M
+Stasis Webifier II
+Target Painter II
+Targeting Range Dampening Script
+Targeting Range Script
+Thorax
+Tormentor
+Tracking Computer II
+Tracking Speed Script
+Tristan
+True Sansha Adaptive Nano Plating
+Typhoon
+Ultraviolet S
+Umbra Scoped Radar ECM
+Valkyrie II
+Valkyrie SW-600
+Vexor
+Void M
+Void S
+Vortex Compact Magnetic Field Stabilizer
+Warp Disruptor II
+Warp Scrambler I
+Warp Scrambler II
+Warrior I
+Warrior II
+Worm
+X5 Enduring Stasis Webifier
+Large Shield Extender II
+Tracking Enhancer II
+720mm Howitzer Artillery II
+TE-2100 Ample Light Missile Launcher
+Medium Anti-EM Screen Reinforcer I
+Medium Core Defense Field Extender I
+Mjolnir Fury Light Missile
+Nova Fury Light Missile
+Caldari Navy Nova Light Missile
+Caldari Navy Mjolnir Light Missile
+Republic Fleet Proton M
+Antipharmakon Iokira
+Republic Fleet Titanium Sabot M
+Hurricane
+Caracal
+50MN Cold-Gas Enduring Microwarpdrive
+Caldari Navy Inferno Light Missile
+Rapid Light Missile Launcher II
+Caldari Navy Scourge Light Missile
+'Arbalest' Rocket Launcher I
+50MN Quad LiF Restrained Microwarpdrive
+Active Shielding Charge
+Arbalest Compact Light Missile Launcher
+Caldari Navy Inferno Rocket
+Caldari Navy Mjolnir Rocket
+Caldari Navy Nova Rocket
+Caldari Navy Scourge Rocket
+Capacitor Power Relay II
+Centii C-Type Small Remote Armor Repairer
+Co-Processor II
+Combat Scanner Probe I
+EM Ward Field II
+Expanded Probe Launcher I
+Flycatcher
+Focused Medium Beam Laser II
+Inferno Fury Light Missile
+Interdiction Sphere Launcher I
+Jackdaw
+Large S95a Scoped Remote Shield Booster
+Light Missile Launcher II
+Light Shield Maintenance Bot I
+Malediction
+Mark I Compact Capacitor Power Relay
+Medium 'Regard' Remote Capacitor Transmitter
+Medium Anti-Kinetic Screen Reinforcer I
+Medium Bay Loading Accelerator I
+Medium Processor Overclocking Unit II
+Medium S95a Scoped Remote Shield Booster
+Medium Shield Extender II
+Medium Shield Maintenance Bot II
+Osprey
+Pithi A-Type Small Remote Shield Booster
+Pithi B-Type Small Remote Shield Booster
+Sabre
+Scalpel
+Scourge Fury Light Missile
+Scythe
+Shield Command Burst I
+Shield Harmonizing Charge
+Small Ionic Field Projector I
+Small Rocket Fuel Cache Partition II
+Small Warhead Calefaction Catalyst I
+Small Warhead Calefaction Catalyst II
+Stiletto
+Stork
+Upgraded EM Ward Amplifier I
+Warp Disrupt Probe
