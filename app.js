@@ -92,7 +92,7 @@ function waitForIt() {
 		
 		var willPay = 0;
 		var totalm3 = 0
-		var finalText = "<table style=\"width:100%>\" <tr> <th>Item name</th><th>Price per unit</th><th>Total</th></tr>";
+		var finalText = "<h4>What I'll buy:</h4><br><br><table style=\"width:100%>\" <tr> <th>Item name</th><th>Price per unit</th><th>Total</th></tr>";
 		var messageBody = "Someone wants to sell you shit, bruh! \n";
 		for (var key in willTake.items) {
 			var k = willTake.items[key];
