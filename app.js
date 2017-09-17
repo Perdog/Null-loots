@@ -10,23 +10,36 @@ $(document).ready(function() {
 		 url: "willbuy.txt",
 		 dataType: "text",
 	 }).done(processBuying);
+	 loadMarketPrices();
 });
 
 var typeid = {};
 var buying = [];
+var prices = {};
 function processTypeIDs(allText) {
     var allLines = allText.split(/\r\n|\n/);
 
     for (var i=0; i<allLines.length; i++) {
 		var line = allLines[i].replace(new RegExp("\",\"", 'g'),"\"---\"")
 		line = line.replace(new RegExp("\"", 'g'), "")
-        var data = line.split("---");
+        var data = line.toLowerCase().split("---");
 		var key = data[1];
         typeid[key] = data[2];
     }
 }
 function processBuying(allText) {
-	buying = allText.split(/\r\n|\n/);
+	buying = allText.toLowerCase().split(/\r\n|\n/);
+}
+function loadMarketPrices() {
+	var fetch = new XMLHttpRequest();
+	fetch.onload = function() {
+		prices = JSON.parse(this.responseText);
+	};
+	fetch.onerror = function() {
+		alert("Failed to load market prices. Try reloading the page. If it still doesn't work CCP's API may be down, give it 30 minutes to fix itself.");
+	};
+	fetch.open('get', 'https://esi.tech.ccp.is/latest/markets/prices/?datasource=tranquility', true);
+	fetch.send();
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,7 +80,6 @@ function reqsuc() {
 	average = Math.round((average/count) *100)/100;
 	willTake.items[id].buy_average = average;
 	waitingOn--;
-	console.log("Finished in " + waitingOn);
 	if (waitingOn == 0) {
 		sendButton.value = 'Submit';
 		sendButton.disabled=false;
@@ -82,17 +94,12 @@ function waitForIt() {
 	// Still waiting..
 	if (waitingOn > 0) {
 		setTimeout(function(){waitForIt()},500);
-		console.log("waiting....");
 	}
 	// Everything is done, lets build the output and email
 	else {
-		console.log("Done waiting");
-	
-		console.log(willTake);
-		
-		var willPay = 0;
-		var totalm3 = 0
-		var finalText = "<h4>What I'll buy:</h4><br><br><table style=\"width:100%>\" <tr> <th>Item name</th><th>Quantity</th><th>Price per unit</th><th>Total</th></tr>";
+		var willPay = 0.0;
+		var totalm3 = 0.0;
+		var finalText = "<h4>What I'll buy (" + Object.keys(willTake.items).length + "/" + totalPasted + ")</h4><br><br><table style=\"width:100%>\" <tr> <th>Item name</th><th>Quantity</th><th>Price per unit</th><th>Total</th></tr>";
 		var messageBody = "Someone wants to sell you shit, bruh! \n\n";
 		//messageBody += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title></title><style></style></head><body>";
 		//messageBody += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" height=\"100%\" width=\"100%\" id=\"bodyTable\"><tr><td align=\"center\" valign=\"top\"><table border=\"0\" cellpadding=\"20\" cellspacing=\"0\" width=\"600\" id=\"emailContainer\">";
@@ -103,7 +110,8 @@ function waitForIt() {
 			var perm3 = Math.round(((p/(parseFloat(k.m3.replace(" m3", ""))*k.quantity))-(250*k.quantity))*100)/100;
 			
 			k.will_pay = p;
-			willPay += p;
+			if (p)
+				willPay += p;
 			totalm3 += perm3;
 			
 			messageBody += k.item_name + "\t\t x" + k.quantity.toLocaleString() + "\t\t @ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit\t\tTotal: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\t\t" + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3 \n";
@@ -111,15 +119,17 @@ function waitForIt() {
 			finalText += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr>"
 		}
 		
-		messageBody += "\nTotal Profit per m3: " + totalm3;
+		messageBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk";
 		//messageBody += "<tr hieght=\"30\"></tr><tr><td>Grand total</td><td></td><td></td><td>" + willPay + "</td><td>" + totalm3 + "</td></tr>";
 		//messageBody += "</table></td></tr></table></body></html>";
-		finalText += "<tr height=30px></tr><tr><td>Grand total</td><td></td><td>" + willPay + "</td></tr></table><br><u><h4>Add the code \"" + uuid + "\" in the contract description.</h4></u>";
+		finalText += "<tr height=30px></tr><tr><td>Grand total</td><td><td></td></td><td>" + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr></table><br><u><h4>Add the code \"" + uuid + "\" in the contract description.</h4></u>";
+		$('#results').text("");
 		$('#results').append(finalText);
-		send_email(messageBody);
+		//send_email(messageBody);
 	}
 }
 
+var totalPasted = 0;
 var willTake = {};
 /*
 "line" array layout
@@ -131,6 +141,7 @@ var willTake = {};
 */
 function compose_list(pasted) {
 	var allLines = pasted.split(/\r\n|\n/);
+	totalPasted = allLines.length;
 	
 	if (allLines[0].length < 7) {
 		alert("Empty field or failed paste. Please try again");
@@ -142,31 +153,56 @@ function compose_list(pasted) {
 	for(var i = 0; i < allLines.length; i++) {
 		var line = allLines[i].split(/\t/g);
 		
-		if (buying.indexOf(line[0]) != -1) {
-			var itemid = typeid[line[0]];
-			willTake.items[itemid] = {};
-			willTake.items[itemid].item_name = line[0];
-			willTake.items[itemid].quantity = line[1];
-			willTake.items[itemid].m3 = line[5];
-			
-			//https://esi.tech.ccp.is/latest/markets/10000002/orders/?datasource=tranquility&order_type=buy&page=1&type_id= item[0]
-			if (waitingOn == 0) {
-				sendButton.value='Processing...';
-				sendButton.disabled=true;
-			}
-			waitingOn++;
-			console.log(waitingOn + " to wait on");
-			
-			var fetch = new XMLHttpRequest();
-			fetch.onload = reqsuc;
-			fetch.onerror = reqerror;
-			fetch.open('get', 'https://esi.tech.ccp.is/latest/markets/10000002/orders/?datasource=tranquility&order_type=buy&page=1&type_id=' + itemid, true);
-			fetch.send();
+		if (buying.indexOf(line[0].toLowerCase()) != -1) {
+			addToOrder(line);
+		}
+		// If not on my buy list, check the price of it, if above 1M lets take it anyways.
+		else if (checkPrice(line[0])) {
+			addToOrder(line);
 		}
 	}
 	
 	// Need to wait for all the HTTP requests to finish running
 	waitForIt();
+}
+
+function checkPrice(itemName) {
+	var id = typeid[itemName.toLowerCase()];
+	for (var key in prices) {
+		if ((prices[key].type_id + "") == id) {
+			if (prices[key].average_price && prices[key].average_price > 1500000) {
+				//console.log("Nice price for " + itemName + " @ " + prices[key].average_price);
+				return true;
+			} else {
+				//console.log("Bad price for " + itemName + " @ " + prices[key].average_price);
+				return false;
+			}
+		}
+	}
+	console.log("No ID found for " + itemName);
+	
+	return false;
+}
+
+function addToOrder(line) {
+	var itemid = typeid[line[0].toLowerCase()];
+	willTake.items[itemid] = {};
+	willTake.items[itemid].item_name = line[0];
+	willTake.items[itemid].quantity = line[1];
+	willTake.items[itemid].m3 = line[5];
+	
+	//https://esi.tech.ccp.is/latest/markets/10000002/orders/?datasource=tranquility&order_type=buy&page=1&type_id= item[0]
+	if (waitingOn == 0) {
+		sendButton.value='Processing...';
+		sendButton.disabled=true;
+	}
+	waitingOn++;
+	
+	var fetch = new XMLHttpRequest();
+	fetch.onload = reqsuc;
+	fetch.onerror = reqerror;
+	fetch.open('get', 'https://esi.tech.ccp.is/latest/markets/10000002/orders/?datasource=tranquility&order_type=buy&page=1&type_id=' + itemid, true);
+	fetch.send();
 }
 
 function send_email(body) {
