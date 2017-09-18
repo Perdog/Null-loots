@@ -87,7 +87,6 @@ function reqsuc() {
 		sendButton.disabled=false;
 	}
 }
-
 function reqerror(error) {
 	alert("error \n" + error);
 }
@@ -210,6 +209,7 @@ function addToOrder(line) {
 function send_email(body) {
     sendButton.value='Sending…';
     sendButton.disabled=true;
+	
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
@@ -223,11 +223,10 @@ function send_email(body) {
     data_js['subject'] = uuid;
     data_js['text'] = body;
     var params = toParams(data_js);
-
     request.open("POST", "https://postmail.invotes.com/send", true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
     request.send(params);
+	
     return false;
 }
 
@@ -242,10 +241,10 @@ js_form.addEventListener("submit", function (e) {
     e.preventDefault();
 });
 function js_onSuccess() {
-    // remove this to avoid redirect
+	sendButton.value = 'Sent!';
 }
 function js_onError(error) {
-    // remove this to avoid redirect
+	sendButton.value = 'Failed!';
 	alert("The page failed to send an email. Please try again. \n " + error);
 }
 
