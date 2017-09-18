@@ -1,4 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////
+var version = "1.0.0";
 $(document).ready(function() {
 	$.ajax({
         //type: "GET",
@@ -11,6 +12,7 @@ $(document).ready(function() {
 		 dataType: "text",
 	 }).done(processBuying);
 	 loadMarketPrices();
+	 console.log(version);
 });
 
 var typeid = {};
