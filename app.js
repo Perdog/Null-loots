@@ -125,7 +125,7 @@ function waitForIt() {
 		finalText += "<tr height=30px></tr><tr><td>Grand total</td><td><td></td></td><td>" + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr></table><br><u><h4>Add the code \"" + uuid + "\" in the contract description.</h4></u>";
 		$('#results').text("");
 		$('#results').append(finalText);
-		//send_email(messageBody);
+		send_email(messageBody);
 	}
 }
 
