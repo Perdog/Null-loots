@@ -242,9 +242,11 @@ js_form.addEventListener("submit", function (e) {
 });
 function js_onSuccess() {
 	sendButton.value = 'Sent!';
+	console.log("Email sent.");
 }
 function js_onError(error) {
 	sendButton.value = 'Failed!';
+	console.log("Email failed: \n" + error);
 	alert("The page failed to send an email. Please try again. \n " + error);
 }
 
