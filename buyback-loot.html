@@ -1,0 +1,74 @@
+<html lang="en-US">
+
+	<head>
+		<title>Loot buyback</title>
+    	<!-- JQuery stuff -->
+    	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+		<script>
+			$(function() {
+				$("#header").load("header.html");
+				$("#footer").load("footer.html");
+			});
+		</script>
+		
+		
+	</head>
+    
+    <body>
+		<div id="header"></div>
+		<br>
+		<div id="dynamic-container" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="jumbotron">
+						<h2>
+						Pedro's
+						<font color="cyan">P</font><font color="orange">i</font><font color="yellow">ñ</font><font color="purple">a</font><font color="pink">t</font><font color="orange">a</font>
+						Stuffing Services
+						<small><small>We buy your shit, so <i><b>you</b></i> don't have to deal with it!</small></small></h2>
+						How it works: <br>
+						• Open your item hangar and switch to list view. <br>
+						• Select the loot you're intereseted in selling. <br>
+						• Copy and paste the items into the box below. <br>
+						• Hit the big orange button to get your quote. <br>
+						• The results will be displayed below the button. My goal with this project isn't 100% buyback, but I will buy items we commonly use on doctrine ships, and expensive shiny things. <br>
+						• If you like the price listed, hit the 'Send' button below the list, and create an item exchange contract with the items listed, at the price given. Add the code at the bottom of the list to the contract description. Set the expiry to 4 weeks (Gives me breathing room if I'm running low on isk). <br>
+						<br>
+						
+						<br>
+						<font color=yellow>Note<sup>1</sup>: Please make your contracts in the 00TY-J Fortizar. This prevents me from having to jump around collecting everything, or from having to get CFO to do it.</font>
+						<br>
+						<font color=yellow>Note<sup>2</sup>: All prices are based on Jita <b>buy</b> orders.</font>
+					</div>
+					<!--
+					<textarea id="items" class="form-control" rows="10" cols="50"></textarea><br>
+                    <button id="submit" type="button" class="btn btn-warning btn-block">Gimme your best price!</button>
+					-->
+					<form id="javascript_form">
+						<textarea id="items" name="text" placeholder="Paste your items here" class="form-control" rows="10" cols="50"></textarea>
+						<br>
+						<input type="submit" id="submit_quote" class="btn btn-warning btn-block" value="Get a quote" />
+					</form>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-12">
+					<!--<h4>What I'll take:</h4>
+					<textarea id="results" class="form-control" rows="2" cols="10"></textarea>-->
+					<span id="results"></span>
+				</div>
+			</div>
+			<div class="row">
+				<br>
+				<div id="footer"></div>
+			</div>
+		</div>
+		
+		<script type="text/csv" src="./typeids.csv"></script>
+	
+	</body>
+    
+	
+	
+</html>
