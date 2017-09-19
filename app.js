@@ -128,7 +128,6 @@ function waitForIt() {
 		finalText += "<input type=\"submit\" id=\"send_email\" class=\"btn btn-warning btn-block\" value=\"Looks good!\" onclick=\"send_email()\" />";
 		$('#results').text("");
 		$('#results').append(finalText);
-		//send_email(emailBody);
 	}
 }
 
