@@ -50,11 +50,12 @@ var regID = "10000002";
 var form_id_js = "javascript_form";
 var uuid;
 var waitingOn = 0;
+var emailBody = "";
 var data_js = {
     "access_token": "q7evs0jcl1n40n6s2kkkvx5x"
 };
 
-var sendButton = document.getElementById("send_email");
+var sendButton = document.getElementById("submit_quote");
 var js_form = document.getElementById(form_id_js);
 
 sendButton.onclick = do_the_stuffs;
@@ -83,7 +84,7 @@ function reqsuc() {
 	willTake.items[id].buy_average = average;
 	waitingOn--;
 	if (waitingOn == 0) {
-		sendButton.value = 'Submit';
+		sendButton.value = 'Get a new quote';
 		sendButton.disabled=false;
 	}
 }
@@ -101,10 +102,10 @@ function waitForIt() {
 		var willPay = 0.0;
 		var totalm3 = 0.0;
 		var finalText = "<h4>What I'll buy (" + Object.keys(willTake.items).length + "/" + totalPasted + ")</h4><br><br><table style=\"width:100%>\" <tr> <th>Item name</th><th>Quantity</th><th>Price per unit</th><th>Total</th></tr>";
-		var messageBody = "Someone wants to sell you shit, bruh! \n\n";
-		//messageBody += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title></title><style></style></head><body>";
-		//messageBody += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" height=\"100%\" width=\"100%\" id=\"bodyTable\"><tr><td align=\"center\" valign=\"top\"><table border=\"0\" cellpadding=\"20\" cellspacing=\"0\" width=\"600\" id=\"emailContainer\">";
-		//messageBody += "<tr><td>Item name</td><td>Quantity</td><td>isk/unit</td><td>Total</td><td>isk/m3</td></tr>";
+		emailBody = "Someone wants to sell you shit, bruh! \n\n";
+		//emailBody += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title></title><style></style></head><body>";
+		//emailBody += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" height=\"100%\" width=\"100%\" id=\"bodyTable\"><tr><td align=\"center\" valign=\"top\"><table border=\"0\" cellpadding=\"20\" cellspacing=\"0\" width=\"600\" id=\"emailContainer\">";
+		//emailBody += "<tr><td>Item name</td><td>Quantity</td><td>isk/unit</td><td>Total</td><td>isk/m3</td></tr>";
 		for (var key in willTake.items) {
 			var k = willTake.items[key];
 			var p = (k.buy_average * k.quantity);
@@ -115,18 +116,19 @@ function waitForIt() {
 				willPay += p;
 			totalm3 += perm3;
 			
-			messageBody += k.item_name + "\t\t x" + k.quantity.toLocaleString() + "\t\t @ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit\t\tTotal: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\t\t" + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3 \n";
-			//messageBody += "<tr><td>" + k.item_name + "</td><td>" + k.quantity + "</td><td>" + k.buy_average + "</td><td>" + k.will_pay + "</td><td>" + perm3 + "</td></tr>";
+			emailBody += k.item_name + "\t\t x" + k.quantity.toLocaleString() + "\t\t @ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit\t\tTotal: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\t\t" + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3 \n";
+			//emailBody += "<tr><td>" + k.item_name + "</td><td>" + k.quantity + "</td><td>" + k.buy_average + "</td><td>" + k.will_pay + "</td><td>" + perm3 + "</td></tr>";
 			finalText += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr>"
 		}
 		
-		messageBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk";
-		//messageBody += "<tr hieght=\"30\"></tr><tr><td>Grand total</td><td></td><td></td><td>" + willPay + "</td><td>" + totalm3 + "</td></tr>";
-		//messageBody += "</table></td></tr></table></body></html>";
+		emailBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk";
+		//emailBody += "<tr hieght=\"30\"></tr><tr><td>Grand total</td><td></td><td></td><td>" + willPay + "</td><td>" + totalm3 + "</td></tr>";
+		//emailBody += "</table></td></tr></table></body></html>";
 		finalText += "<tr height=30px></tr><tr><td>Grand total</td><td><td></td></td><td>" + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr></table><br><u><h4>Add the code \"" + uuid + "\" in the contract description.</h4></u>";
+		finalText += "<input type=\"submit\" id=\"send_email\" class=\"btn btn-warning btn-block\" value=\"Looks good!\" onclick=\"send_email()\" />";
 		$('#results').text("");
 		$('#results').append(finalText);
-		send_email(messageBody);
+		//send_email(emailBody);
 	}
 }
 
@@ -206,9 +208,10 @@ function addToOrder(line) {
 	fetch.send();
 }
 
-function send_email(body) {
-    sendButton.value='Sending…';
-    sendButton.disabled=true;
+function send_email() {
+    var b = document.getElementById("send_email");
+	b.value='Sending…';
+    b.disabled=true;
 	
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -221,7 +224,7 @@ function send_email(body) {
     };
 		
     data_js['subject'] = uuid;
-    data_js['text'] = body;
+    data_js['text'] = emailBody;
     var params = toParams(data_js);
     request.open("POST", "https://postmail.invotes.com/send", true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -241,11 +244,11 @@ js_form.addEventListener("submit", function (e) {
     e.preventDefault();
 });
 function js_onSuccess() {
-	sendButton.value = 'Sent!';
+	document.getElementById("send_email").value = 'Sent!';
 	console.log("Email sent.");
 }
 function js_onError(error) {
-	sendButton.value = 'Failed!';
+	document.getElementById("send_email").value = 'Failed!';
 	console.log("Email failed: \n" + error);
 	alert("The page failed to send an email. Please try again. \n " + error);
 }
@@ -256,6 +259,11 @@ function uuidv4() {
 
 function escapeRegExp(str) {
     return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+
+/* MENU BAR FUNCTIONS */
+function expand_menu(x) {
+	x.classList.toggle("change");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
