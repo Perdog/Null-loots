@@ -5,7 +5,6 @@ $(document).ready(function() {
         //type: "GET",
         url: "typeids.csv",
         dataType: "text",
-        //success: function(data) {processData(data);}
      }).done(processTypeIDs);
 	 $.ajax({
 		 url: "willbuy.txt",
@@ -101,6 +100,7 @@ function waitForIt() {
 	else {
 		var willPay = 0.0;
 		var totalm3 = 0.0;
+		var m3final = 0.0;
 		var finalText = "<h4>What I'll buy (" + Object.keys(willTake.items).length + "/" + totalPasted + ")</h4><br><br><table style=\"width:100%>\" <tr> <th>Item name</th><th>Quantity</th><th>Price per unit</th><th>Total</th></tr>";
 		emailBody = "Someone wants to sell you shit, bruh! \n\n";
 		//emailBody += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /><title></title><style></style></head><body>";
@@ -109,19 +109,20 @@ function waitForIt() {
 		for (var key in willTake.items) {
 			var k = willTake.items[key];
 			var p = (k.buy_average * k.quantity);
-			var perm3 = Math.round(( ((getPrice(k.item_name)/parseFloat(k.m3.replace(" m3", "")))*k.quantity) - (250*k.quantity) - p)*100)/100;
+			var perm3 = Math.round(( ((getPrice(k.item_name)/parseFloat(k.m3.replace(" m3", "")))) - (250) - k.buy_average)*100)/100;
 			
 			k.will_pay = p;
 			if (p)
 				willPay += p;
+			m3final += parseFloat(k.m3.replace(" m3",""));
 			totalm3 += perm3;
 			
-			emailBody += k.item_name + "\t\t x" + k.quantity.toLocaleString() + "\t\t @ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit\t\tTotal: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\t\t" + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3, at sell prices \n";
+			emailBody += k.item_name + fuckingTabs(k.item_name, 10) + "x" + k.quantity.toLocaleString() + fuckingTabs(k.quantity.toString() + " ", 2) + "@ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit" + fuckingTabs(k.buy_average, 10) + "Total: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk" + fuckingTabs(k.will_pay.toString(), 10) + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3, at sell prices \n";
 			//emailBody += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + perm3 + " isk/m3</td></tr>";
 			finalText += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td></tr>"
 		}
 		
-		emailBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk";
+		emailBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk\nTotal profit: " + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\nTotal size: " + m3final.toLocaleString(undefined, { minimumFractionDigits:2}) + " m3";
 		//emailBody += "<tr hieght=\"30\"></tr><tr><td>Grand total</td><td></td><td></td><td>" + willPay + "</td><td>" + totalm3 + "</td></tr>";
 		//emailBody += "</table></td></tr></table></body></html>";
 		finalText += "<tr height=30px></tr><tr><td>Grand total</td><td><td></td></td><td>" + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr></table><br><u><h4>Add the code \"" + uuid + "\" in the contract description.</h4></u>";
@@ -129,6 +130,16 @@ function waitForIt() {
 		$('#results').text("");
 		$('#results').append(finalText);
 	}
+}
+
+function fuckingTabs(string, s) {
+	var L = string.length;
+	var tabCount = s - Math.ceil(L/6);
+	var returnS = "";
+	for (var i = 0; i <tabCount; i++) {
+		returnS += "\t";
+	}
+	return returnS;
 }
 
 var totalPasted = 0;
