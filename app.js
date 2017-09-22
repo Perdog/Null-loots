@@ -1,4 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////////
+/*
+Initial page loads. Load the included text files, log the version for funsies.
+*/
 var version = "v1.0.0";
 $(document).ready(function() {
 	$.ajax({
@@ -10,13 +12,11 @@ $(document).ready(function() {
 		 url: "willbuy.txt",
 		 dataType: "text",
 	 }).done(processBuying);
-	 loadMarketPrices();
 	 console.log(version);
 });
 
 var typeid = {};
 var buying = [];
-var prices = {};
 function processTypeIDs(allText) {
     var allLines = allText.split(/\r\n|\n/);
 
@@ -31,21 +31,14 @@ function processTypeIDs(allText) {
 function processBuying(allText) {
 	buying = allText.toLowerCase().split(/\r\n|\n/);
 }
-function loadMarketPrices() {
-	var fetch = new XMLHttpRequest();
-	fetch.onload = function() {
-		prices = JSON.parse(this.responseText);
-	};
-	fetch.onerror = function() {
-		alert("Failed to load market prices. Try reloading the page. If it still doesn't work CCP's API may be down, give it 30 minutes to fix itself.");
-	};
-	fetch.open('get', 'https://esi.tech.ccp.is/latest/markets/prices/?datasource=tranquility', true);
-	fetch.send();
-}
-////////////////////////////////////////////////////////////////////////////////////
 
-//update this with your js_form selector
+/*
+The meat and bones of it all.
+*/
+
+// Variables
 var regID = "10000002";
+var jita = "30000142";
 var form_id_js = "javascript_form";
 var uuid;
 var waitingOn = 0;
@@ -54,17 +47,18 @@ var data_js = {
     "access_token": "q7evs0jcl1n40n6s2kkkvx5x"
 };
 
-var sendButton = document.getElementById("submit_quote");
 var js_form = document.getElementById(form_id_js);
+var quoteButton = document.getElementById("submit_quote");
+quoteButton.onclick = do_the_stuffs;
 
-sendButton.onclick = do_the_stuffs;
-	
+// Main function. Create UUID, put together the table for user viewing
 function do_the_stuffs() {
 	uuid = uuidv4();
 	compose_list($('#items').val());
 }
 
 function reqsuc() {
+	//REDO for new API
 	var data = JSON.parse(this.responseText);
 	var id = data[0].type_id;
 	var average = 0;
@@ -83,14 +77,15 @@ function reqsuc() {
 	willTake.items[id].buy_average = average;
 	waitingOn--;
 	if (waitingOn == 0) {
-		sendButton.value = 'Get a new quote';
-		sendButton.disabled=false;
+		quoteButton.value = 'Get a new quote';
+		quoteButton.disabled=false;
 	}
 }
 function reqerror(error) {
 	alert("error \n" + error);
 }
 
+// Wait for all of the HTTP requests to finish
 function waitForIt() {
 	// Still waiting..
 	if (waitingOn > 0) {
@@ -98,6 +93,7 @@ function waitForIt() {
 	}
 	// Everything is done, lets build the output and email
 	else {
+		//REDO for new API
 		var willPay = 0.0;
 		var totalm3 = 0.0;
 		var m3final = 0.0;
@@ -132,6 +128,7 @@ function waitForIt() {
 	}
 }
 
+// Tabs R hard... So is formatting emails without tables
 function fuckingTabs(string, s) {
 	var L = string.length;
 	var tabCount = s - Math.ceil(L/6);
@@ -179,38 +176,16 @@ function compose_list(pasted) {
 	waitForIt();
 }
 
+// Get the sell price for an item
 function getPrice(itemName) {
-	var id = typeid[itemName.toLowerCase()];
-	for (var key in prices) {
-		if ((prices[key].type_id + "") == id) {
-			var p = prices[key].average_price;
-			if (p)
-				return p;
-			else
-				return -1;
-		}
-	}
-	return -1;
-}
-
-function checkPrice(itemName) {
-	var id = typeid[itemName.toLowerCase()];
-	for (var key in prices) {
-		if ((prices[key].type_id + "") == id) {
-			if (prices[key].average_price && prices[key].average_price > 1500000) {
-				//console.log("Nice price for " + itemName + " @ " + prices[key].average_price);
-				return true;
-			} else {
-				//console.log("Bad price for " + itemName + " @ " + prices[key].average_price);
-				return false;
-			}
-		}
-	}
-	console.log("No ID found for " + itemName);
 	
-	return false;
+}
+// Check item buy prices
+function checkPrice(itemName) {
+	
 }
 
+// Create JSON entry for items, and send HTTP request.
 function addToOrder(line) {
 	var itemid = typeid[line[0].toLowerCase()];
 	willTake.items[itemid] = {};
@@ -220,8 +195,8 @@ function addToOrder(line) {
 	
 	//https://esi.tech.ccp.is/latest/markets/10000002/orders/?datasource=tranquility&order_type=buy&page=1&type_id= item[0]
 	if (waitingOn == 0) {
-		sendButton.value='Processing...';
-		sendButton.disabled=true;
+		quoteButton.value='Processing...';
+		quoteButton.disabled=true;
 	}
 	waitingOn++;
 	
@@ -232,6 +207,7 @@ function addToOrder(line) {
 	fetch.send();
 }
 
+// Send email to me so I can see what contracts should have and be priced at.
 function send_email() {
     var b = document.getElementById("send_email");
 	b.value='Sending…';
@@ -257,6 +233,7 @@ function send_email() {
     return false;
 }
 
+// Helper functions and events
 function toParams(data_js) {
     var form_data = [];
     for ( var key in data_js ) {
@@ -281,10 +258,6 @@ function uuidv4() {
 	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
 }
 
-function escapeRegExp(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-}
-
 /* MENU BAR FUNCTIONS */
 function expand_menu(x) {
 	x.classList.toggle("change");
@@ -292,7 +265,7 @@ function expand_menu(x) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-/*
+/* For testing:
 Augoror Exoplanets Hunter SKIN (Permanent)	1	Super Kerr-Induced Nanocoatings			0.01 m3	212,584.47 ISK
 Barium Firework	400	Festival Charges			40 m3	148,204.00 ISK
 Copper Firework	400	Festival Charges			40 m3	119,168.00 ISK
