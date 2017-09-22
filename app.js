@@ -109,16 +109,16 @@ function waitForIt() {
 		for (var key in willTake.items) {
 			var k = willTake.items[key];
 			var p = (k.buy_average * k.quantity);
-			var perm3 = Math.round(((p/(parseFloat(k.m3.replace(" m3", ""))*k.quantity))-(250*k.quantity))*100)/100;
+			var perm3 = Math.round(( ((getPrice(k.item_name)/parseFloat(k.m3.replace(" m3", "")))*k.quantity) - (250*k.quantity) - p)*100)/100;
 			
 			k.will_pay = p;
 			if (p)
 				willPay += p;
 			totalm3 += perm3;
 			
-			emailBody += k.item_name + "\t\t x" + k.quantity.toLocaleString() + "\t\t @ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit\t\tTotal: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\t\t" + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3 \n";
-			//emailBody += "<tr><td>" + k.item_name + "</td><td>" + k.quantity + "</td><td>" + k.buy_average + "</td><td>" + k.will_pay + "</td><td>" + perm3 + "</td></tr>";
-			finalText += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr>"
+			emailBody += k.item_name + "\t\t x" + k.quantity.toLocaleString() + "\t\t @ " + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit\t\tTotal: " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\t\t" + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3, at sell prices \n";
+			//emailBody += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + perm3 + " isk/m3</td></tr>";
+			finalText += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.buy_average.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td></tr>"
 		}
 		
 		emailBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk";
@@ -166,6 +166,20 @@ function compose_list(pasted) {
 	
 	// Need to wait for all the HTTP requests to finish running
 	waitForIt();
+}
+
+function getPrice(itemName) {
+	var id = typeid[itemName.toLowerCase()];
+	for (var key in prices) {
+		if ((prices[key].type_id + "") == id) {
+			var p = prices[key].average_price;
+			if (p)
+				return p;
+			else
+				return -1;
+		}
+	}
+	return -1;
 }
 
 function checkPrice(itemName) {
