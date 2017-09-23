@@ -183,7 +183,6 @@ function postIt() {
 	for (var key in willTake) {
 		var k = willTake[key];
 		var p = (k.will_pay * k.quantity);
-		var perm3 = Math.round(((k.buy_max-k.will_pay)/k.m3*k.quantity)*100)/100;
 		
 		if (p)
 			willPay += p;
@@ -256,6 +255,13 @@ function uuidv4() {
 }
 // Tabs R hard... So is formatting emails without tables
 function fuckingTabs(string, s) {
+	var toAdd = s - string.length;
+	var ret = "";
+	for (var i = 0; i < toAdd; i++) {
+		ret += " ";
+	}
+	return ret;
+	/*
 	var L = string.length;
 	var tabCount = s - Math.floor(L/7);
 	var returnS = "";
@@ -263,6 +269,7 @@ function fuckingTabs(string, s) {
 		returnS += "\t";
 	}
 	return returnS;
+	*/
 }
 
 /* MENU BAR FUNCTIONS */
