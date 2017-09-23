@@ -1,7 +1,7 @@
 /*
 Initial page loads. Load the included text files, log the version for funsies.
 */
-var version = "v1.0.0";
+var version = "v1.0.9";
 $(document).ready(function() {
 	$.ajax({
         //type: "GET",
@@ -12,6 +12,7 @@ $(document).ready(function() {
 		 url: "willbuy.txt",
 		 dataType: "text",
 	 }).done(processBuying);
+	 //Versioning
 	 console.log(version);
 });
 
@@ -40,7 +41,8 @@ The meat and bones of it all.
 // Statics
 var regID = "10000002";
 var jita = "30000142";
-var priceToBuy = 2000000;
+var priceToBuy = 2500000;
+var maxCallSize = 50;
 var form_id_js = "javascript_form";
 
 // Non-Statics
@@ -55,6 +57,7 @@ var totalPasted = 0;
 var allItems = {};
 var willTake = {};
 var allItemIds = [];
+var waitingOn = 0;
 
 quoteButton.onclick = do_the_stuffs;
 
@@ -88,18 +91,26 @@ function parse_list(pasted) {
 		allItems[id].quantity = parseInt(line[1]);
 		allItems[id].m3 = parseFloat(line[5].replace(" m3", ""));
 	}
-	console.log(allItemIds.length + " - " + allItemIds.toString());
 	fetchPrices();
 }
 
 function fetchPrices() {
 	updateButton('Fetching prices..', true);
-	var fetch = new XMLHttpRequest();
-	fetch.onload = reqsuc;
-	fetch.onerror = reqerror;
-	var str = allItemIds.toString();
-	fetch.open('get', 'https://api.evemarketer.com/ec/marketstat/json?typeid=' + str + '&regionlimit=' + regID + '&usesystem=' + jita, true);
-	fetch.send();
+	willTake = {};
+	
+	var toLoop = Math.ceil(allItemIds.length/maxCallSize);
+	for (var i = 0; i < toLoop; i++) {
+		waitingOn++;
+		var begin = maxCallSize*i;
+		var end = Math.min((maxCallSize + begin), (allItemIds.length));
+		
+		var fetch = new XMLHttpRequest();
+		fetch.onload = reqsuc;
+		fetch.onerror = reqerror;
+		var str = allItemIds.slice(begin, end).toString();
+		fetch.open('get', 'https://api.evemarketer.com/ec/marketstat/json?typeid=' + str + '&regionlimit=' + regID + '&usesystem=' + jita, true);
+		fetch.send();
+	}
 }
 
 /*
@@ -127,16 +138,19 @@ function reqerror(error) {
 
 function reqsuc() {
 	var data = JSON.parse(this.responseText);
-	updateButton('Checking your wares..', true);
-	console.log(data);
-	
-	willTake = {};
 	
 	for (var key in data) {
 		var d = data[key];
 		var id = d.buy.forQuery.types[0];
 		
-		if (buying.indexOf(allItems[id].item_name.toLowerCase()) != -1 | d.buy.max >= priceToBuy) {
+		if (buying.indexOf(allItems[id].item_name.toLowerCase()) != -1) {
+			willTake[id] = allItems[id];
+			var w = willTake[id];
+			w.buy_max = d.buy.max;
+			w.sell_max = d.sell.max;
+			w.will_pay = w.buy_max*0.95;
+		}
+		else if (d.buy.max >= priceToBuy) {
 			willTake[id] = allItems[id];
 			var w = willTake[id];
 			w.buy_max = d.buy.max;
@@ -144,7 +158,9 @@ function reqsuc() {
 			w.will_pay = (w.buy_max*0.95) - (250*w.m3);
 		}
 	}
-	postIt();
+	waitingOn--;
+	if (waitingOn == 0)
+		postIt();
 }
 /*
 willTake attributes:
@@ -197,12 +213,14 @@ function send_email() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-            document.getElementById("send_email").value = 'Sent!';
+            b.value = 'Sent!';
+			//Debugging
 			console.log("Email sent.");
         } else
         if(request.readyState == 4) {
             var error = request.response;
-			document.getElementById("send_email").value = 'Failed!';
+			b.value = 'Failed!';
+			//Debugging
 			console.log("Email failed:\n" + error);
 			alert("The page failed to send an email. Please try again.\nIf you continue to see this error, ping Pedro on Discord\n" + error);
         }
