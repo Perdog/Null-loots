@@ -183,17 +183,18 @@ function postIt() {
 	for (var key in willTake) {
 		var k = willTake[key];
 		var p = (k.will_pay * k.quantity);
+		var perm3 = Math.round(((k.buy_max-k.will_pay)/k.m3)*100)/100;
 		
 		if (p)
 			willPay += p;
 		m3final += k.m3;
 		totalm3 += perm3;
 	
-		emailBody += k.item_name + fuckingTabs(k.item_name, 10) + "x" + k.quantity.toLocaleString() + fuckingTabs(k.quantity.toString() + " ", 2) + "@ " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit" + fuckingTabs(k.will_pay, 5) + "Total: " + p.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk" + fuckingTabs(p.toString(), 5) + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3, at buy prices \n";
+		emailBody += k.item_name + fuckingTabs(k.item_name, 70) + "x" + k.quantity.toLocaleString() + fuckingTabs(k.quantity.toString() + " ", 15) + "@ " + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk/unit" + fuckingTabs(k.will_pay.toString(), 40) + "Total: " + p.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk" + fuckingTabs(p.toString(), 40) + perm3.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk per m3, at buy prices - " + (k.m3*k.quantity).toLocaleString(undefined, { minimumFractionDigits:2}) + " m3 total\n";
 		finalText += "<tr><td>" + k.item_name + "</td><td>" + k.quantity.toLocaleString() + "</td><td>" + k.will_pay.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td><td>" + p.toLocaleString(undefined, { minimumFractionDigits:2 }) + " isk</td></tr>"
 	}
 	
-	emailBody += "\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk\nTotal profit: " + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\nTotal size: " + m3final.toLocaleString(undefined, { minimumFractionDigits:2}) + " m3";
+	emailBody += "\nTotal paying: " + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk\nTotal Profit per m3: " + totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) + "isk\nTotal profit: " + (totalm3.toLocaleString(undefined, { minimumFractionDigits:2}) * m3final.toLocaleString(undefined, { minimumFractionDigits:2})) + " isk\nTotal size: " + m3final.toLocaleString(undefined, { minimumFractionDigits:2}) + " m3";
 	emailBody += "\n\t\n\t\n\t";
 	finalText += "<tr height=30px></tr><tr><td>Grand total</td><td><td></td></td><td>" + willPay.toLocaleString(undefined, { minimumFractionDigits:2}) + " isk</td></tr></table><br><u><h4>Add the code \"" + uuid + "\" in the contract description.</h4></u>";
 	finalText += "<input type=\"submit\" id=\"send_email\" class=\"btn btn-warning btn-block\" value=\"Looks good!\" onclick=\"send_email()\" />";
