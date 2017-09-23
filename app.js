@@ -88,7 +88,7 @@ function parse_list(pasted) {
 		allItems[id].quantity = parseInt(line[1]);
 		allItems[id].m3 = parseFloat(line[5].replace(" m3", ""));
 	}
-	
+	console.log(allItemIds.length + " - " + allItemIds.toString());
 	fetchPrices();
 }
 
