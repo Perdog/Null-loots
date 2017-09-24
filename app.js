@@ -42,7 +42,7 @@ The meat and bones of it all.
 var regID = "10000002";
 var jita = "30000142";
 var priceToBuy = 2500000;
-var maxCallSize = 50;
+var maxCallSize = 25;
 var form_id_js = "javascript_form";
 
 // Non-Statics
@@ -85,10 +85,20 @@ function parse_list(pasted) {
 		updateButton('Processing.. ' + (i+1) + '/' + totalPasted, true);
 		var line = allLines[i].split(/\t/g);
 		var id = typeid[line[0].toLowerCase()];
+		if (!id) {
+			console.log(line[0] + ' does not exist on the market');
+			continue;
+		}
 		allItemIds.push(id);
 		allItems[id] = {};
 		allItems[id].item_name = line[0];
 		allItems[id].quantity = parseInt(line[1]);
+		if (!allItems[id].quantity) {
+			console.log(line[0] + ' does not have a quantity.');
+			alert('Item has not been repackaged! Double check ' + line[0] + '.');
+			delete allItems[id];
+			continue;
+		}
 		allItems[id].m3 = parseFloat(line[5].replace(" m3", ""));
 	}
 	fetchPrices();
@@ -99,6 +109,11 @@ function fetchPrices() {
 	willTake = {};
 	
 	var toLoop = Math.ceil(allItemIds.length/maxCallSize);
+	if (toLoop == 0) {
+		updateButton('There are no items in there... Try again', false);
+		console.log('No quotable items in the list');
+		return;
+	}
 	for (var i = 0; i < toLoop; i++) {
 		waitingOn++;
 		var begin = maxCallSize*i;
@@ -142,6 +157,9 @@ function reqsuc() {
 	for (var key in data) {
 		var d = data[key];
 		var id = d.buy.forQuery.types[0];
+		
+		if (!allItems[id])
+			continue;
 		
 		if (buying.indexOf(allItems[id].item_name.toLowerCase()) != -1) {
 			willTake[id] = allItems[id];
