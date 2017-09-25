@@ -42,7 +42,7 @@ The meat and bones of it all.
 var regID = "10000002";
 var jita = "30000142";
 var priceToBuy = 2500000;
-var maxCallSize = 25;
+var maxCallSize = 150;
 var form_id_js = "javascript_form";
 
 // Non-Statics
