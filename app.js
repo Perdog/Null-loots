@@ -1,7 +1,7 @@
 /*
 Initial page loads. Load the included text files, log the version for funsies.
 */
-var version = "v1.0.9";
+var version = "v1.1.0";
 $(document).ready(function() {
 	$.ajax({
         //type: "GET",
