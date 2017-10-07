@@ -1,7 +1,7 @@
 /*
 Initial page loads. Load the included text files, log the version for funsies.
 */
-var version = "v1.0.0";
+var version = "v1.1.0";
 $(document).ready(function() {
 	$.ajax({
         //type: "GET",
@@ -173,7 +173,7 @@ function reqsuc() {
 			var w = willTake[id];
 			w.buy_max = d.buy.max;
 			w.sell_max = d.sell.max;
-			w.will_pay = w.buy_max*0.95;
+			w.will_pay = (w.buy_max*0.95) - (250*w.m3);
 		}
 	}
 	waitingOn--;
