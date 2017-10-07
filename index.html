@@ -3,15 +3,85 @@
 
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Loot buyback</title>
-    	<!-- JQuery stuff -->
-    	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				$("#header").load("header.html");
-				$("#footer").load("footer.html");
-			});
-		</script>
+	<title>Loot buyback</title>
+    <!-- JQuery stuff -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="./app.js"></script>
+	<link rel="stylesheet" href="./bootstrap.css">
+	
+	<style type="text/css">
+	table {
+		width: 100%
+	}
+	
+	th, td {
+		padding: 10px;
+		text-align: center;
+	}
+	/*
+	.menu_container {
+		width: 100%;
+		height: 50px;
+		display: inline-block;
+		cursor: pointer;
+	}
+	
+	.menu_bar {
+		transition: 0.4s;
+	}
+
+	.bar1, .bar2, .bar3 {
+		width: 35px;
+		height: 5px;
+		background-color: darkblue;
+		margin: 6px 0;
+		transition: 0.4s;
+	}
+	
+	.change .menu_bar {
+		background-color: #f88;
+		height: 50px;
+	}
+
+	/* Rotate first bar
+	.change .bar1 {
+		-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+		transform: rotate(-45deg) translate(-9px, 6px) ;
+	}
+
+	/* Fade out the second bar
+	.change .bar2 {
+		opacity: 0;
+	}
+
+	/* Rotate last bar
+	.change .bar3 {
+		-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+		transform: rotate(45deg) translate(-8px, -8px) ;
+	}*/
+	
+	html {
+		position: relative;
+		min-height: 100%;
+	}
+	body {
+		margin: 0 0 100px; /* bottom = footer height */
+		padding: 25px;
+	}
+	footer {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 100px;
+		width: 100%;
+		overflow:hidden;
+	}
+	</style>
 		
 		
 	</head>
@@ -72,6 +142,12 @@
 	
 	</body>
     
+	<footer>
+		<small><small>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;Created by <a href="https://evewho.com/pilot/Pedro+Athonille" target="_blank">Pedro Athonille</a></p>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;Powered with <a href="https://postmail.invotes.com" target="_blank">PostMail</a>, <a href="https://esi.tech.ccp.is/latest/#/" target="_blank">ESI</a> and <a href="https://evemarketer.com/" target="_blank">EvE Marketer</a></p>
+		</small></small>
 	
+	</footer>
 	
 </html>
