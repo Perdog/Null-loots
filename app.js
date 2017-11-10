@@ -165,14 +165,14 @@ function reqsuc() {
 			willTake[id] = allItems[id];
 			var w = willTake[id];
 			w.buy_max = d.buy.max;
-			w.sell_max = d.sell.max;
+			w.sell_min = d.sell.max;
 			w.will_pay = w.buy_max*0.95;
 		}
 		else if (d.buy.max >= priceToBuy) {
 			willTake[id] = allItems[id];
 			var w = willTake[id];
 			w.buy_max = d.buy.max;
-			w.sell_max = d.sell.max;
+			w.sell_min = d.sell.max;
 			w.will_pay = (w.buy_max*0.95) - (250*w.m3);
 		}
 	}
@@ -187,7 +187,7 @@ willTake attributes:
 	.m3
 	.will_pay
 	.buy_max
-	.sell_max
+	.sell_min
 */
 // Post table to webpage
 function postIt() {
